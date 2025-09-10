@@ -1,6 +1,6 @@
-import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
+import { useEffect } from "react";
+import { Routes, Route, Navigate } from "react-router-dom";
 import useAuthStore from "../models/store/authStore";
-import { canAccess } from "../utils/auth";
 
 import MainLayout from "../views/layouts/MainLayout";
 import LandingLayout from "../views/layouts/LandingLayout";
@@ -16,24 +16,39 @@ import Expenses from "../views/pages/Expenses";
 import Trips from "../views/pages/Trips";
 
 function ProtectedRoute({ children, module }) {
-  const { user, loading } = useAuthStore();
+  const { user, loading, hasAccess } = useAuthStore();
 
   if (loading) return <div>Loading...</div>;
   if (!user) return <Navigate to="/login" replace />;
-
-  if (module && !canAccess(module)) {
-    return <Navigate to="/dashboard" replace />;
-  }
+  if (module && !hasAccess(module)) return <Navigate to="/dashboard" replace />;
 
   return children;
 }
 
 export default function AppRoutes() {
+  const { user, loading, initAuth } = useAuthStore();
+
+  useEffect(() => {
+    initAuth();
+  }, [initAuth]);
+
+  if (loading) return <div>Loading...</div>;
+
   return (
     <Routes>
       <Route element={<LandingLayout />}>
-        <Route path="/" element={<Landing />} />
-        <Route path="/login" element={<Login />} />
+        <Route
+          path="/"
+          element={
+            user ? <Navigate to="/dashboard" replace /> : <Landing />
+          }
+        />
+        <Route
+          path="/login"
+          element={
+            user ? <Navigate to="/dashboard" replace /> : <Login />
+          }
+        />
       </Route>
 
       <Route element={<MainLayout />}>
@@ -94,6 +109,8 @@ export default function AppRoutes() {
           }
         />
       </Route>
+
+      <Route path="*" element={<Navigate to="/" replace />} />
     </Routes>
   );
 }

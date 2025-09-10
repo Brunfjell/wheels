@@ -1,4 +1,4 @@
-import { db } from "../../firebase";
+import { db } from "../../firebase/initFirebase";
 import { collection, addDoc, getDocs, updateDoc, doc, deleteDoc } from "firebase/firestore";
 
 const expenseRef = collection(db, "expenses");

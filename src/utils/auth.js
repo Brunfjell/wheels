@@ -6,5 +6,7 @@ export const canAccess = (module) => {
 };
 
 export const isRole = (role) => {
+  console.log(role)
   return useAuthStore.getState().role === role;
+
 };

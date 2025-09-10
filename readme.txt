@@ -73,7 +73,7 @@ firestore-root
 │         ├── startTime: timestamp
 │         ├── endTime: timestamp | null
 │         ├── status: "pending" | "active" | "completed"
-│         ├── destination: geopoint/string
+│         ├── destination: [ { lat: number, lng: number, name: string } ]
 │         ├── stops: [ { reason: string, time: timestamp } ]
 │         ├── expenses: [ { type: string, amount: number, time: timestamp } ]
 │         └── report: string

@@ -1,7 +1,11 @@
 @import "tailwindcss";
- @plugin "daisyui" {
-   themes: lofi --default, black --prefersdark;
- }
+@plugin "daisyui" {
+  themes: lofi --default, black --prefersdark;
+}
+@import "leaflet/dist/leaflet.css";
+@import "leaflet-routing-machine/dist/leaflet-routing-machine.css";
+
+
 
 @plugin "daisyui/theme" {
   name: "lofi";
@@ -33,11 +37,10 @@
   --radius-box: 0.5rem;
   --size-selector: 0.25rem;
   --size-field: 0.25rem;
-  --border: 1px;
+  --border: 2px;
   --depth: 0;
   --noise: 0;
 }
-
 
 @plugin "daisyui/theme" {
   name: "black";
